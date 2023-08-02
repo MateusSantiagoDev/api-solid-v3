@@ -23,4 +23,12 @@ describe('Get User Profile Use Case', () => {
     })
     expect(user.name).toEqual('John Doe')
   })
+
+  it('Should not be able to get user profile with wrong id', () => {
+    expect(() =>
+      sut.execute({
+        userId: 'non-existing-id',
+      })
+    ).rejects.toBeInstanceOf(Error)
+  })
 })
