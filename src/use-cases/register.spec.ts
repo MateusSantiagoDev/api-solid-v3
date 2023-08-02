@@ -1,6 +1,7 @@
 import { compare } from 'bcryptjs'
 import { expect, it, describe, beforeEach } from 'vitest'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
+import { UserAlreadyExistsError } from './errors/user-already-exists'
 import { RegisterUseCase } from './register'
 
 let usersRepository: InMemoryUsersRepository
@@ -36,7 +37,7 @@ describe('Register Use Case', () => {
         email,
         password: '123123',
       })
-    ).rejects.toBeInstanceOf(Error)
+    ).rejects.toBeInstanceOf(UserAlreadyExistsError)
   })
 
   it('Should hash user password upon registration', async () => {
