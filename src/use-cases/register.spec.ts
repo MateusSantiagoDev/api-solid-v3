@@ -19,4 +19,22 @@ describe('Register Use Case', () => {
     })
     expect(user.id).toEqual(expect.any(String))
   })
+
+  it('Should not de able to register with same email twice', async () => {
+    const email = 'johnDoe@example.com'
+
+    await sut.execute({
+      name: 'John Doe',
+      email,
+      password: '123123',
+    })
+
+    await expect(() =>
+      sut.execute({
+        name: 'John Doe',
+        email,
+        password: '123123',
+      })
+    ).rejects.toBeInstanceOf(Error)
+  })
 })

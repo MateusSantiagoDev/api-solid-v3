@@ -18,6 +18,12 @@ export class RegisterUseCase {
     email,
     password,
   }: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
+    const useWithSameEmail = await this.usersRepository.findByEmail(email)
+
+    if (useWithSameEmail) {
+      throw new Error()
+    }
+    
     const user = await this.usersRepository.create({
       name,
       email,
