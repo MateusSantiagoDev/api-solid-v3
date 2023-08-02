@@ -2,6 +2,7 @@ import { hash } from 'bcryptjs'
 import { describe, it, expect, beforeEach } from 'vitest'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 import { GetUserProfileUseCase } from './get-user-profile'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let usersRepository: InMemoryUsersRepository
 let sut: GetUserProfileUseCase
@@ -29,6 +30,6 @@ describe('Get User Profile Use Case', () => {
       sut.execute({
         userId: 'non-existing-id',
       })
-    ).rejects.toBeInstanceOf(Error)
+    ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })
