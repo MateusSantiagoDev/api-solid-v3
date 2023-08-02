@@ -35,4 +35,18 @@ describe('Authenticate Use Case', () => {
       })
     ).rejects.toBeInstanceOf(Error)
   })
+
+  it('Should not be able to authenticate with wrong password', async () => {
+    await usersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password_hash: await hash('123123', 6),
+    })
+    await expect(() =>
+      sut.execute({
+        email: 'johndoe@example.com',
+        password: '123',
+      })
+    ).rejects.toBeInstanceOf(Error)
+  })
 })
