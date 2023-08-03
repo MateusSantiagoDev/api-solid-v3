@@ -9,6 +9,7 @@ interface SearchGymsUseCaseRequest {
 interface SearchGymsUseCaseResponse {
   gyms: Gym[]
 }
+
 export class SearchGymsUseCase {
   constructor(private gymsRepository: GymsRepository) {}
 
@@ -17,9 +18,6 @@ export class SearchGymsUseCase {
     page,
   }: SearchGymsUseCaseRequest): Promise<SearchGymsUseCaseResponse> {
     const gyms = await this.gymsRepository.searchMany(query, page)
-    if (!gyms) {
-      throw new Error()
-    }
     return { gyms }
   }
 }
